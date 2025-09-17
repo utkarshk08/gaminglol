@@ -1,0 +1,62 @@
+/* Word Hunt UI styles */
+:root{
+  --bg:#0b1020; --card:#111936; --muted:#2a355f; --ink:#e7ecff; --ink-dim:#a5b3ff;
+  --accent:#6ea8ff; --accent-2:#9c6eff; --accent-3:#6effc1;
+}
+html,body{height:100%}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(1200px 900px at 20% -10%, #13204a 0%, transparent 60%),radial-gradient(800px 600px at 120% 20%, #20134a 0%, transparent 55%),var(--bg);color:var(--ink)}
+.container{max-width:1100px;margin:0 auto;padding:16px}
+.grid-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));backdrop-filter: blur(8px);border:1px solid #223;padding:12px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);transform: translateY(8px);opacity:0;animation: panelIn .8s ease forwards}
+.panel-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.panel h2{margin:8px 0;font-size:18px}
+.auth{display:flex;gap:8px;align-items:center}
+input,select,button,textarea{background:#0f142b;color:var(--ink);border:1px solid var(--muted);border-radius:10px;padding:10px;transition: transform .12s ease, box-shadow .2s ease, background .2s ease}
+input::placeholder,textarea::placeholder{color:var(--ink-dim)}
+button{cursor:pointer;position:relative;overflow:hidden}
+button:hover{background:#16204a}
+button:active{transform: scale(.98)}
+.grid{display:grid;gap:8px;margin:12px 0}
+.grid[data-size="4"]{grid-template-columns:repeat(4,1fr)}
+.grid[data-size="5"]{grid-template-columns:repeat(5,1fr)}
+.grid .cell{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));border:1px solid var(--muted);border-radius:12px;aspect-ratio:1/1;font-weight:800;font-size:24px;letter-spacing:1px;color:#fff;transform: translateY(8px) scale(.98);opacity:0;animation: cellIn .5s ease forwards;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06)}
+.seed{opacity:.8}
+.submit-area{display:flex;flex-direction:column;gap:8px}
+.builder{display:flex;flex-direction:column;gap:8px}
+.builder-row{display:flex;align-items:center;gap:8px}
+.current-word{min-width:120px;min-height:36px;display:flex;align-items:center;padding:6px 10px;background:#0f142b;border:1px solid var(--muted);border-radius:8px}
+.builder-actions{display:flex;gap:8px;margin-left:auto}
+.words-list{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#0f142b;border:1px solid var(--muted);border-radius:999px;padding:6px 10px;display:flex;align-items:center;gap:8px}
+.chip .x{cursor:pointer;opacity:.8}
+.cell.selected{outline:2px solid var(--accent);box-shadow:0 0 0 3px rgba(110,168,255,.2) inset}
+.cell.path{background:linear-gradient(180deg, rgba(110,168,255,.2), rgba(0,0,0,.08))}
+.result{background:#0f142b;border:1px solid var(--muted);border-radius:8px;padding:8px;min-height:38px}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{border-bottom:1px solid #223;padding:8px;text-align:left}
+.footer{opacity:.7;text-align:center}
+
+@media (max-width: 560px){
+  header .auth{flex-wrap:wrap}
+}
+
+/* Header gradient underline */
+header h1{display:inline-block;position:relative}
+header h1::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:3px;background:linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));border-radius:999px;filter: drop-shadow(0 0 6px rgba(110,168,255,.5))}
+
+/* Ripple */
+button .ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple .6s linear;background:radial-gradient(circle, rgba(255,255,255,.6) 10%, rgba(255,255,255,0) 60%)}
+
+/* Animated table rows */
+#leaderboard tbody tr{opacity:0;transform: translateY(6px);animation: rowIn .4s ease forwards}
+
+/* Confetti canvas */
+#confetti{position:fixed;inset:0;pointer-events:none}
+
+/* Keyframes */
+@keyframes panelIn{to{opacity:1;transform: translateY(0)}}
+@keyframes cellIn{to{opacity:1;transform: translateY(0) scale(1)}}
+@keyframes rowIn{to{opacity:1;transform: translateY(0)}}
+@keyframes ripple{to{transform:scale(6);opacity:0}}
+
+

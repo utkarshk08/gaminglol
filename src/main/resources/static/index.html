@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word Hunt</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="container">
+    <h1>Word Hunt</h1>
+    <div class="auth">
+      <input id="playerName" type="text" placeholder="Player name" maxlength="24">
+      <span id="authStatus"></span>
+    </div>
+  </header>
+
+  <main class="container grid-layout">
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Daily Grid</h2>
+        <div>
+          <input id="dateInput" type="date">
+          <select id="sizeSelect">
+            <option value="4" selected>4x4</option>
+            <option value="5">5x5</option>
+          </select>
+          <button id="refreshDaily">Refresh</button>
+        </div>
+      </div>
+      <div id="grid" class="grid"></div>
+      <div class="seed">Seed: <span id="seedVal">-</span></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Submit Words</h2>
+      </div>
+      <div class="submit-area">
+        <div class="builder">
+          <div class="builder-row">
+            <div>Current:</div>
+            <div id="currentWord" class="current-word">—</div>
+            <div class="builder-actions">
+              <button id="undoBtn">Undo</button>
+              <button id="clearWordBtn">Clear</button>
+              <button id="addWordBtn">Add</button>
+            </div>
+          </div>
+          <div class="words-list" id="wordsList"></div>
+        </div>
+        <textarea id="wordsInput" rows="4" placeholder="Or type words separated by spaces/new lines"></textarea>
+        <button id="submitBtn">Submit</button>
+        <div id="submitResult" class="result"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Leaderboard</h2>
+        <div>
+          <input id="lbDateInput" type="date">
+          <button id="refreshLb">Refresh</button>
+        </div>
+      </div>
+      <table id="leaderboard" class="table">
+        <thead><tr><th>#</th><th>User</th><th>Score</th><th>Words</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>My Score</h2>
+        <div>
+          <input id="meDateInput" type="date">
+          <button id="refreshMe">Refresh</button>
+        </div>
+      </div>
+      <div id="mePanel" class="result"></div>
+    </section>
+  </main>
+
+  <footer class="container footer">Simple demo. Scores reset per day.</footer>
+  <canvas id="confetti"></canvas>
+  <script src="/app.js"></script>
+</body>
+<style>
+/* Inline critical to avoid FOUC while styles load */
+html,body{height:100%}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0b1020;color:#e7ecff}
+.container{max-width:1100px;margin:0 auto;padding:16px}
+.grid-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.panel{background:#111936;border:1px solid #223;padding:12px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.panel-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.panel h2{margin:8px 0;font-size:18px}
+.auth{display:flex;gap:8px;align-items:center}
+input,select,button,textarea{background:#0f142b;color:#e7ecff;border:1px solid #2a355f;border-radius:8px;padding:8px}
+button{cursor:pointer}button:hover{background:#16204a}
+.grid{display:grid;gap:6px;margin:12px 0}
+.grid .cell{display:flex;align-items:center;justify-content:center;background:#0f142b;border:1px solid #2a355f;border-radius:8px;aspect-ratio:1/1;font-weight:700;font-size:22px;letter-spacing:1px}
+.seed{opacity:.8}
+.submit-area{display:flex;flex-direction:column;gap:8px}
+.result{background:#0f142b;border:1px solid #2a355f;border-radius:8px;padding:8px;min-height:38px}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{border-bottom:1px solid #223;padding:8px;text-align:left}
+.footer{opacity:.7;text-align:center}
+</style>
+</html>
+

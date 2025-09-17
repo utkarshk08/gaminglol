@@ -76,3 +76,50 @@ Run both Back-end & Front-end in one place:
 ```
 mvn spring-boot:run
 ```
+
+## Word Hunt API (simple demo)
+
+Base path: `/api/wordhunt`
+
+- `GET /api/wordhunt/daily?date=YYYY-MM-DD&size=4`
+  - Public. Returns deterministic daily grid and seed.
+  - Response:
+    ```json
+    { "seed": 20250917, "size": 4, "grid": [["A","B","C","D"], ["E","F","G","H"], ["I","J","K","L"], ["M","N","O","P"]] }
+    ```
+
+- `GET /api/wordhunt/leaderboard?date=YYYY-MM-DD&limit=50`
+  - Public. Returns top scores for the given day.
+  - Response:
+    ```json
+    { "date": "2025-09-17", "top": [{ "username": "alice", "score": 23, "wordsFound": 8 }] }
+    ```
+
+- `POST /api/wordhunt/submit?date=YYYY-MM-DD`
+  - Body:
+    ```json
+    { "username": "alice", "words": ["tree", "stone", "note"] }
+    ```
+  - Server validates against the grid and a small built-in dictionary, deduplicates, requires length >= 3, computes score server-side, and caps to one submission per user per day.
+  - Response:
+    ```json
+    { "accepted": true, "message": "OK", "score": 10, "wordsFound": 3, "words": ["TREE","STONE","NOTE"] }
+    ```
+
+- `GET /api/wordhunt/me?date=YYYY-MM-DD&username=alice`
+  - Returns the current user's score for the day if submitted.
+  - Response:
+    ```json
+    { "date": "2025-09-17", "username": "alice", "score": 10, "wordsFound": 3, "words": ["TREE","STONE","NOTE"] }
+    ```
+
+Notes:
+- Grid is generated deterministically from date; default size is 4.
+- Dictionary is a minimal in-memory set for demo; replace with a larger source for production use.
+
+## Frontend (static demo)
+
+- Open `http://localhost:8080/` after starting the app.
+- Enter a player name at the top and play; no sign-in required.
+- Daily grid can be changed via date and size controls; leaderboard and "My Score" panels have their own date pickers.
+- Enter words separated by spaces/newlines and click Submit. Server validates and computes the score.
