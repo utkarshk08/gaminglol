@@ -324,6 +324,11 @@
     const merged = Array.from(new Set([ ...queuedWords, ...typed ]));
     wordsInput.value = merged.join(' ');
     await originalSubmit();
+    // Clear queued words after successful submit
+    if (submitResult.textContent.includes('Accepted')) {
+      queuedWords = [];
+      renderWordChips();
+    }
   }
 })();
 

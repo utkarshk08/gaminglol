@@ -10,7 +10,7 @@
   <header class="container">
     <h1>Word Hunt</h1>
     <div class="auth">
-      <input id="playerName" type="text" placeholder="Player name" maxlength="24">
+      <input id="playerName" type="text" placeholder="Enter your name to play" maxlength="24">
       <span id="authStatus"></span>
     </div>
   </header>
@@ -39,12 +39,12 @@
       <div class="submit-area">
         <div class="builder">
           <div class="builder-row">
-            <div>Current:</div>
-            <div id="currentWord" class="current-word">—</div>
+            <div><strong>Current word:</strong></div>
+            <div id="currentWord" class="current-word">Click letters to build a word</div>
             <div class="builder-actions">
               <button id="undoBtn">Undo</button>
               <button id="clearWordBtn">Clear</button>
-              <button id="addWordBtn">Add</button>
+              <button id="addWordBtn">Add Word</button>
             </div>
           </div>
           <div class="words-list" id="wordsList"></div>
@@ -81,7 +81,10 @@
     </section>
   </main>
 
-  <footer class="container footer">Simple demo. Scores reset per day.</footer>
+  <footer class="container footer">
+    <p>🎮 <strong>How to play:</strong> Click adjacent letters to form words (3+ letters). Words must be in the dictionary and follow Boggle rules.</p>
+    <p>Scores reset daily. One submission per player per day.</p>
+  </footer>
   <canvas id="confetti"></canvas>
   <script src="/app.js"></script>
 </body>
