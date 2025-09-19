@@ -3,110 +3,164 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Word Hunt</title>
+  <title>GameStore - Your Digital Gaming Hub</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <header class="container">
-    <h1>Word Hunt</h1>
+    <h1>🎮 GameStore</h1>
     <div class="auth">
-      <input id="playerName" type="text" placeholder="Enter your name to play" maxlength="24">
+      <input id="playerName" type="text" placeholder="Enter your username" maxlength="24">
+      <button id="createProfileBtn">Create Profile</button>
       <span id="authStatus"></span>
     </div>
   </header>
 
-  <main class="container grid-layout">
-    <section class="panel">
+  <main class="container">
+    <!-- User Profile Section -->
+    <section class="panel" id="profilePanel" style="display: none;">
       <div class="panel-header">
-        <h2>Daily Grid</h2>
-        <div>
-          <input id="dateInput" type="date">
-          <select id="sizeSelect">
-            <option value="4" selected>4x4</option>
-            <option value="5">5x5</option>
-          </select>
-          <button id="refreshDaily">Refresh</button>
-        </div>
+        <h2>👤 My Profile</h2>
+        <button id="refreshProfileBtn">Refresh</button>
       </div>
-      <div id="grid" class="grid"></div>
-      <div class="seed">Seed: <span id="seedVal">-</span></div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-header">
-        <h2>Submit Words</h2>
-      </div>
-      <div class="submit-area">
-        <div class="builder">
-          <div class="builder-row">
-            <div><strong>Current word:</strong></div>
-            <div id="currentWord" class="current-word">Click letters to build a word</div>
-            <div class="builder-actions">
-              <button id="undoBtn">Undo</button>
-              <button id="clearWordBtn">Clear</button>
-              <button id="addWordBtn">Add Word</button>
-            </div>
+      <div id="profileContent" class="profile-content">
+        <div class="profile-stats">
+          <div class="stat">
+            <span class="stat-label">Wallet Balance</span>
+            <span id="walletBalance" class="stat-value">$0.00</span>
           </div>
-          <div class="words-list" id="wordsList"></div>
+          <div class="stat">
+            <span class="stat-label">Games Owned</span>
+            <span id="gamesOwned" class="stat-value">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Total Spent</span>
+            <span id="totalSpent" class="stat-value">$0.00</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Premium Member</span>
+            <span id="premiumStatus" class="stat-value">No</span>
+          </div>
         </div>
-        <textarea id="wordsInput" rows="4" placeholder="Or type words separated by spaces/new lines"></textarea>
-        <button id="submitBtn">Submit</button>
-        <div id="submitResult" class="result"></div>
+        <div class="wallet-actions">
+          <input id="walletAmount" type="number" placeholder="Amount" step="0.01" min="0">
+          <button id="addWalletBtn">Add to Wallet</button>
+        </div>
       </div>
     </section>
 
-    <section class="panel">
+    <!-- Subscription Section -->
+    <section class="panel" id="subscriptionPanel" style="display: none;">
       <div class="panel-header">
-        <h2>Leaderboard</h2>
-        <div>
-          <input id="lbDateInput" type="date">
-          <button id="refreshLb">Refresh</button>
-        </div>
+        <h2>💎 Subscription</h2>
+        <button id="refreshSubscriptionBtn">Refresh</button>
       </div>
-      <table id="leaderboard" class="table">
-        <thead><tr><th>#</th><th>User</th><th>Score</th><th>Words</th></tr></thead>
-        <tbody></tbody>
-      </table>
+      <div id="subscriptionContent" class="subscription-content">
+        <div id="subscriptionInfo" class="subscription-info">
+          <p>No active subscription</p>
+        </div>
+        <div class="subscription-plans">
+          <div class="plan">
+            <h3>Basic</h3>
+            <div class="price">$9.99/month</div>
+            <ul>
+              <li>Access to free games</li>
+              <li>Basic support</li>
+            </ul>
+            <button class="subscribe-btn" data-plan="BASIC">Subscribe</button>
+          </div>
+          <div class="plan">
+            <h3>Premium</h3>
+            <div class="price">$19.99/month</div>
+            <ul>
+              <li>All Basic features</li>
+              <li>Premium games library</li>
+              <li>Priority support</li>
+            </ul>
+            <button class="subscribe-btn" data-plan="PREMIUM">Subscribe</button>
+          </div>
+          <div class="plan">
+            <h3>Ultimate</h3>
+            <div class="price">$29.99/month</div>
+            <ul>
+              <li>All Premium features</li>
+              <li>Early access to new games</li>
+              <li>Exclusive content</li>
+            </ul>
+            <button class="subscribe-btn" data-plan="ULTIMATE">Subscribe</button>
+          </div>
+        </div>
+        <button id="cancelSubscriptionBtn" style="display: none;">Cancel Subscription</button>
+      </div>
     </section>
 
+    <!-- Game Store Section -->
     <section class="panel">
       <div class="panel-header">
-        <h2>My Score</h2>
-        <div>
-          <input id="meDateInput" type="date">
-          <button id="refreshMe">Refresh</button>
+        <h2>🛒 Game Store</h2>
+        <div class="store-controls">
+          <select id="categoryFilter">
+            <option value="">All Categories</option>
+            <option value="RPG">RPG</option>
+            <option value="Action">Action</option>
+            <option value="FPS">FPS</option>
+            <option value="Sports">Sports</option>
+            <option value="MOBA">MOBA</option>
+            <option value="Sandbox">Sandbox</option>
+            <option value="Multiplayer">Multiplayer</option>
+            <option value="Party">Party</option>
+          </select>
+          <input id="searchInput" type="text" placeholder="Search games...">
+          <button id="searchBtn">Search</button>
         </div>
       </div>
-      <div id="mePanel" class="result"></div>
+      <div id="gamesGrid" class="games-grid">
+        <!-- Games will be loaded here -->
+      </div>
+    </section>
+
+    <!-- My Games Section -->
+    <section class="panel" id="myGamesPanel" style="display: none;">
+      <div class="panel-header">
+        <h2>🎯 My Games</h2>
+        <button id="refreshPurchasesBtn">Refresh</button>
+      </div>
+      <div id="purchasesList" class="purchases-list">
+        <!-- Purchases will be loaded here -->
+      </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2>📊 Store Analytics</h2>
+        <button id="refreshStatsBtn">Refresh</button>
+      </div>
+      <div id="analyticsContent" class="analytics-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Top Spenders</h3>
+            <div id="topSpenders" class="stat-list"></div>
+          </div>
+          <div class="stat-card">
+            <h3>Top Buyers</h3>
+            <div id="topBuyers" class="stat-list"></div>
+          </div>
+          <div class="stat-card">
+            <h3>Store Stats</h3>
+            <div id="storeStats" class="stat-list"></div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="container footer">
-    <p>🎮 <strong>How to play:</strong> Click adjacent letters to form words (3+ letters). Words must be in the dictionary and follow Boggle rules.</p>
-    <p>Scores reset daily. One submission per player per day.</p>
+    <p>🎮 <strong>GameStore</strong> - Your digital gaming hub powered by Spring Boot & MongoDB Atlas</p>
+    <p>Buy games, manage subscriptions, and track your gaming journey!</p>
   </footer>
+
   <canvas id="confetti"></canvas>
   <script src="/app.js"></script>
 </body>
-<style>
-/* Inline critical to avoid FOUC while styles load */
-html,body{height:100%}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0b1020;color:#e7ecff}
-.container{max-width:1100px;margin:0 auto;padding:16px}
-.grid-layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.panel{background:#111936;border:1px solid #223;padding:12px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-.panel-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.panel h2{margin:8px 0;font-size:18px}
-.auth{display:flex;gap:8px;align-items:center}
-input,select,button,textarea{background:#0f142b;color:#e7ecff;border:1px solid #2a355f;border-radius:8px;padding:8px}
-button{cursor:pointer}button:hover{background:#16204a}
-.grid{display:grid;gap:6px;margin:12px 0}
-.grid .cell{display:flex;align-items:center;justify-content:center;background:#0f142b;border:1px solid #2a355f;border-radius:8px;aspect-ratio:1/1;font-weight:700;font-size:22px;letter-spacing:1px}
-.seed{opacity:.8}
-.submit-area{display:flex;flex-direction:column;gap:8px}
-.result{background:#0f142b;border:1px solid #2a355f;border-radius:8px;padding:8px;min-height:38px}
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{border-bottom:1px solid #223;padding:8px;text-align:left}
-.footer{opacity:.7;text-align:center}
-</style>
 </html>
-

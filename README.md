@@ -1,125 +1,338 @@
-# Spring Boot Login and Registration example with MongoDB
+# GameStore - Digital Gaming Hub
 
-Build a Spring Boot Auth with HttpOnly Cookie, JWT, Spring Security and Spring Data MongoDB. You'll know:
-- Appropriate Flow for User Login and Registration with JWT
-- Spring Boot Rest API Architecture with Spring Security
-- How to configure Spring Security to work with JWT
-- How to define Data Models and association for User Login and Registration
-- Way to get and generate Cookies for Token
-- Way to use Spring Data MongoDB to interact with MongoDB Database
+A modern game store application built with Spring Boot and MongoDB Atlas, demonstrating e-commerce functionality with game purchases, subscription management, and user analytics.
 
-## User Registration, Login and Authorization process.
+## 🎮 Features
 
-![spring-boot-mongodb-login-example-flow](spring-boot-mongodb-login-example-flow.png)
+- **Game Catalog**: Browse and search through a curated collection of games
+- **User Profiles**: Create profiles with wallet management and purchase history
+- **Game Purchases**: Buy games with wallet-based payments
+- **Subscription Plans**: Subscribe to Basic, Premium, or Ultimate plans
+- **Analytics Dashboard**: View top spenders, buyers, and store statistics
+- **Modern UI**: Responsive design with smooth animations and notifications
 
-## Spring Boot Rest API Architecture with Spring Security
-You can have an overview of our Spring Boot Server with the diagram below:
+## 🛠️ Tech Stack
 
-![spring-boot-mongodb-login-example-architecture](spring-boot-mongodb-login-example-architecture.png)
+- **Backend**: Spring Boot 3.1.0, Spring Data MongoDB
+- **Database**: MongoDB Atlas (Cloud)
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Security**: Spring Security (configured for public access)
+- **Build Tool**: Maven
 
-For more detail, please visit:
-> [Spring Boot Login and Registration example with MongoDB](https://www.bezkoder.com/spring-boot-mongodb-login-example/)
+## 🚀 Quick Start
 
-Working with Front-end:
-> [Angular 12](https://www.bezkoder.com/angular-12-jwt-auth-httponly-cookie/) / [Angular 13](https://www.bezkoder.com/angular-13-jwt-auth-httponly-cookie/) / [Angular 14](https://www.bezkoder.com/angular-14-jwt-auth/) / [Angular 15](https://www.bezkoder.com/angular-15-jwt-auth/) / [Angular 16](https://www.bezkoder.com/angular-16-jwt-auth/) / [Angular 17](https://www.bezkoder.com/angular-17-jwt-auth/)
+### Prerequisites
+- Java 17+
+- Maven 3.6+
+- MongoDB Atlas account
 
-> [React](https://www.bezkoder.com/react-login-example-jwt-hooks/) / [React Redux](https://www.bezkoder.com/redux-toolkit-auth/)
+### Setup
 
-More Practice:
-> [Spring Boot with MongoDB CRUD example using Spring Data](https://www.bezkoder.com/spring-boot-mongodb-crud/)
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd game-store
+   ```
 
-> [Spring Boot MongoDB Pagination & Filter example](https://www.bezkoder.com/spring-boot-mongodb-pagination/)
+2. **Configure MongoDB Atlas**
+   - Create a MongoDB Atlas cluster
+   - Get your connection string
+   - Update `src/main/resources/application.properties`:
+   ```properties
+   spring.data.mongodb.uri=mongodb+srv://username:password@cluster.mongodb.net/gamestore
+   ```
 
-> [Spring Boot + GraphQL + MongoDB example](https://www.bezkoder.com/spring-boot-graphql-mongodb-example-graphql-java/)
+3. **Run the application**
+   ```bash
+   ./mvnw spring-boot:run
+   ```
 
-> [Spring Boot Repository Unit Test with @DataJpaTest](https://bezkoder.com/spring-boot-unit-test-jpa-repo-datajpatest/)
+4. **Access the application**
+   - Open http://localhost:8080 in your browser
+   - Create a user profile to start using the store
 
-> [Spring Boot Rest Controller Unit Test with @WebMvcTest](https://www.bezkoder.com/spring-boot-webmvctest/)
+## 📚 API Documentation
 
-> Validation: [Spring Boot Validate Request Body](https://www.bezkoder.com/spring-boot-validate-request-body/)
+### Games
 
-> Documentation: [Spring Boot and Swagger 3 example](https://www.bezkoder.com/spring-boot-swagger-3/)
-
-> Caching: [Spring Boot Redis Cache example](https://www.bezkoder.com/spring-boot-redis-cache-example/)
-
-Fullstack:
-> [Vue.js + Spring Boot + MongoDB example](https://www.bezkoder.com/spring-boot-vue-mongodb/)
-
-> [Angular 8 + Spring Boot + MongoDB example](https://www.bezkoder.com/angular-spring-boot-mongodb/)
-
-> [Angular 10 + Spring Boot + MongoDB example](https://www.bezkoder.com/angular-10-spring-boot-mongodb/)
-
-> [Angular 11 + Spring Boot + MongoDB example](https://www.bezkoder.com/angular-11-spring-boot-mongodb/)
-
-> [Angular 12 + Spring Boot + MongoDB example](https://www.bezkoder.com/angular-12-spring-boot-mongodb/)
-
-> [Angular 13 + Spring Boot + MongoDB example](https://www.bezkoder.com/angular-13-spring-boot-mongodb/)
-
-> [Angular 14 + Spring Boot + MongoDB example](https://www.bezkoder.com/spring-boot-angular-14-mongodb/)
-
-> [Angular 15 + Spring Boot + MongoDB example](https://www.bezkoder.com/spring-boot-angular-15-mongodb/)
-
-> [Angular 16 + Spring Boot + MongoDB example](https://www.bezkoder.com/spring-boot-angular-16-mongodb/)
-
-> [Angular 17 + Spring Boot + MongoDB example](https://www.bezkoder.com/spring-boot-angular-17-mongodb/)
-
-> [React + Spring Boot + MongoDB example](https://www.bezkoder.com/react-spring-boot-mongodb/)
-
-Run both Back-end & Front-end in one place:
-> [Integrate Angular with Spring Boot Rest API](https://www.bezkoder.com/integrate-angular-spring-boot/)
-
-> [Integrate React with Spring Boot Rest API](https://www.bezkoder.com/integrate-reactjs-spring-boot/)
-
-> [Integrate Vue with Spring Boot Rest API](https://www.bezkoder.com/integrate-vue-spring-boot/)
-
-## Run Spring Boot application
-```
-mvn spring-boot:run
+#### Get All Games
+```http
+GET /api/store/games
 ```
 
-## Word Hunt API (simple demo)
+#### Get Games (Paginated)
+```http
+GET /api/store/games/paged?page=0&size=10
+```
 
-Base path: `/api/wordhunt`
+#### Get Game by ID
+```http
+GET /api/store/games/{id}
+```
 
-- `GET /api/wordhunt/daily?date=YYYY-MM-DD&size=4`
-  - Public. Returns deterministic daily grid and seed.
-  - Response:
-    ```json
-    { "seed": 20250917, "size": 4, "grid": [["A","B","C","D"], ["E","F","G","H"], ["I","J","K","L"], ["M","N","O","P"]] }
-    ```
+#### Search Games
+```http
+GET /api/store/games/search?q=cyberpunk
+```
 
-- `GET /api/wordhunt/leaderboard?date=YYYY-MM-DD&limit=50`
-  - Public. Returns top scores for the given day.
-  - Response:
-    ```json
-    { "date": "2025-09-17", "top": [{ "username": "alice", "score": 23, "wordsFound": 8 }] }
-    ```
+#### Get Games by Category
+```http
+GET /api/store/games/category/RPG
+```
 
-- `POST /api/wordhunt/submit?date=YYYY-MM-DD`
-  - Body:
-    ```json
-    { "username": "alice", "words": ["tree", "stone", "note"] }
-    ```
-  - Server validates against the grid and a small built-in dictionary, deduplicates, requires length >= 3, computes score server-side, and caps to one submission per user per day.
-  - Response:
-    ```json
-    { "accepted": true, "message": "OK", "score": 10, "wordsFound": 3, "words": ["TREE","STONE","NOTE"] }
-    ```
+### User Management
 
-- `GET /api/wordhunt/me?date=YYYY-MM-DD&username=alice`
-  - Returns the current user's score for the day if submitted.
-  - Response:
-    ```json
-    { "date": "2025-09-17", "username": "alice", "score": 10, "wordsFound": 3, "words": ["TREE","STONE","NOTE"] }
-    ```
+#### Create User Profile
+```http
+POST /api/store/users
+Content-Type: application/json
 
-Notes:
-- Grid is generated deterministically from date; default size is 4.
-- Dictionary is a minimal in-memory set for demo; replace with a larger source for production use.
+{
+  "username": "gamer123",
+  "email": "gamer@example.com",
+  "fullName": "John Gamer"
+}
+```
 
-## Frontend (static demo)
+#### Get User Profile
+```http
+GET /api/store/users/{username}
+```
 
-- Open `http://localhost:8080/` after starting the app.
-- Enter a player name at the top and play; no sign-in required.
-- Daily grid can be changed via date and size controls; leaderboard and "My Score" panels have their own date pickers.
-- Enter words separated by spaces/newlines and click Submit. Server validates and computes the score.
+#### Add to Wallet
+```http
+POST /api/store/users/{username}/wallet/add
+Content-Type: application/json
+
+{
+  "amount": 50.00
+}
+```
+
+### Purchases
+
+#### Purchase Game
+```http
+POST /api/store/purchases
+Content-Type: application/json
+
+{
+  "username": "gamer123",
+  "gameId": "game-id-here",
+  "paymentMethod": "WALLET"
+}
+```
+
+#### Get User Purchases
+```http
+GET /api/store/users/{username}/purchases
+```
+
+### Subscriptions
+
+#### Create Subscription
+```http
+POST /api/store/subscriptions
+Content-Type: application/json
+
+{
+  "username": "gamer123",
+  "subscriptionType": "PREMIUM",
+  "paymentMethod": "WALLET"
+}
+```
+
+#### Get User Subscription
+```http
+GET /api/store/users/{username}/subscription
+```
+
+#### Cancel Subscription
+```http
+POST /api/store/users/{username}/subscription/cancel
+```
+
+### Analytics
+
+#### Get Top Spenders
+```http
+GET /api/store/analytics/top-spenders?limit=10
+```
+
+#### Get Top Buyers
+```http
+GET /api/store/analytics/top-buyers?limit=10
+```
+
+#### Get Store Statistics
+```http
+GET /api/store/analytics/stats
+```
+
+## 🎯 Game Store Features
+
+### Subscription Plans
+
+| Plan | Price | Features |
+|------|-------|----------|
+| **Basic** | $9.99/month | Access to free games, Basic support |
+| **Premium** | $19.99/month | All Basic features, Premium games library, Priority support |
+| **Ultimate** | $29.99/month | All Premium features, Early access to new games, Exclusive content |
+
+### Sample Games
+
+The application comes pre-loaded with 20 popular games across various categories:
+- **RPG**: Cyberpunk 2077, The Witcher 3, Baldur's Gate 3, Elden Ring
+- **Action**: Grand Theft Auto V, Assassin's Creed Mirage, Spider-Man 2
+- **FPS**: Valorant, Counter-Strike 2, Call of Duty: Modern Warfare III
+- **Sports**: FIFA 24, NBA 2K24
+- **Free-to-Play**: Valorant, League of Legends, Counter-Strike 2
+
+## 🏗️ Architecture
+
+### Domain Models
+
+- **Game**: Game catalog with metadata, pricing, and ratings
+- **UserProfile**: User information, wallet balance, purchase history
+- **Purchase**: Transaction records for game purchases
+- **Subscription**: Subscription management and billing
+
+### Key Components
+
+- **GameStoreService**: Business logic for purchases, subscriptions, and analytics
+- **GameStoreController**: REST API endpoints
+- **Repositories**: MongoDB data access with custom queries
+- **DataInitializer**: Populates the store with sample games
+
+## 🎨 Frontend Features
+
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Interactive Game Cards**: Hover effects and smooth animations
+- **Real-time Notifications**: Success/error messages with auto-dismiss
+- **Wallet Management**: Add funds and track balance
+- **Purchase History**: View all purchased games
+- **Subscription Management**: Subscribe/cancel plans
+- **Analytics Dashboard**: Live store statistics
+
+## 🔧 Configuration
+
+### Application Properties
+```properties
+# MongoDB Atlas Connection
+spring.data.mongodb.uri=mongodb+srv://username:password@cluster.mongodb.net/gamestore
+
+# Server Configuration
+server.port=8080
+
+# Security (Public Access)
+spring.security.user.name=admin
+spring.security.user.password=admin
+```
+
+### MongoDB Collections
+- `games`: Game catalog
+- `user_profiles`: User information and statistics
+- `purchases`: Purchase transactions
+- `subscriptions`: Subscription records
+
+## 🚀 Deployment
+
+### Local Development
+```bash
+./mvnw spring-boot:run
+```
+
+### Production Build
+```bash
+./mvnw clean package
+java -jar target/spring-boot-mongodb-login-0.0.1-SNAPSHOT.jar
+```
+
+### Docker (Optional)
+```dockerfile
+FROM openjdk:17-jdk-slim
+COPY target/spring-boot-mongodb-login-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+```
+
+## 📊 Database Schema
+
+### Game Document
+```json
+{
+  "_id": "ObjectId",
+  "title": "Cyberpunk 2077",
+  "description": "An open-world, action-adventure story",
+  "developer": "CD Projekt RED",
+  "publisher": "CD Projekt RED",
+  "price": 59.99,
+  "category": "RPG",
+  "tags": ["rpg", "popular", "trending"],
+  "imageUrl": "https://...",
+  "rating": 4.2,
+  "reviewCount": 1500,
+  "isActive": true,
+  "createdAt": "2025-01-01T00:00:00",
+  "updatedAt": "2025-01-01T00:00:00"
+}
+```
+
+### UserProfile Document
+```json
+{
+  "_id": "ObjectId",
+  "username": "gamer123",
+  "email": "gamer@example.com",
+  "fullName": "John Gamer",
+  "walletBalance": 25.50,
+  "totalGamesPurchased": 3,
+  "totalSpent": 89.97,
+  "preferredPaymentMethod": "WALLET",
+  "favoriteCategories": ["RPG", "Action"],
+  "memberSince": "2025-01-01T00:00:00",
+  "lastLogin": "2025-01-15T10:30:00",
+  "isPremiumMember": true
+}
+```
+
+## 🎯 Use Cases Demonstrated
+
+1. **E-commerce**: Game purchasing with wallet management
+2. **Subscription Services**: Recurring billing and plan management
+3. **User Analytics**: Tracking spending patterns and user behavior
+4. **MongoDB Atlas**: Cloud database integration with Spring Boot
+5. **RESTful APIs**: Clean API design with proper HTTP methods
+6. **Modern Frontend**: Responsive UI with JavaScript interactions
+
+## 🔍 Monitoring & Analytics
+
+The application includes built-in analytics for:
+- Top spending users
+- Most active buyers
+- Store-wide statistics
+- Subscription metrics
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🆘 Support
+
+For questions or issues:
+1. Check the API documentation above
+2. Review the application logs
+3. Ensure MongoDB Atlas connection is working
+4. Verify all required fields are provided in API requests
+
+---
+
+**Happy Gaming! 🎮**
