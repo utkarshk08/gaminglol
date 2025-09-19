@@ -22,8 +22,8 @@ A modern game store application built with Spring Boot and MongoDB Atlas, demons
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Java 17+
-- Maven 3.6+
+- Java 17++
+- Maven 3.6+++
 - MongoDB Atlas account
 
 ### Setup
