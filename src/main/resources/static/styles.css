@@ -220,12 +220,56 @@ button:disabled {
   width: 100%;
   height: 200px;
   overflow: hidden;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .game-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.game-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, var(--surface) 25%, transparent 25%), 
+              linear-gradient(-45deg, var(--surface) 25%, transparent 25%), 
+              linear-gradient(45deg, transparent 75%, var(--surface) 75%), 
+              linear-gradient(-45deg, transparent 75%, var(--surface) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.game-image img.loaded {
+  opacity: 1;
+}
+
+.game-image::after {
+  content: 'Loading...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.game-image:has(img.loaded)::after {
+  opacity: 0;
 }
 
 .game-info {

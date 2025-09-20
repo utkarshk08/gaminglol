@@ -19,12 +19,14 @@ public class GameStoreDataInitializer implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    if (gameRepository.count() == 0) {
-      initializeSampleGames();
-    }
+    // Always initialize games to ensure images are updated
+    initializeSampleGames();
   }
 
   private void initializeSampleGames() {
+    // Clear existing games to ensure fresh data with proper images
+    gameRepository.deleteAll();
+    
     List<Game> sampleGames = Arrays.asList(
       new Game("Cyberpunk 2077", "An open-world, action-adventure story set in Night City", "CD Projekt RED", new BigDecimal("59.99"), "RPG"),
       new Game("The Witcher 3: Wild Hunt", "A story-driven open world RPG", "CD Projekt RED", new BigDecimal("29.99"), "RPG"),

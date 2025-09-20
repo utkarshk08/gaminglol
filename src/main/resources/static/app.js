@@ -190,7 +190,12 @@
       gameCard.className = 'game-card';
       gameCard.innerHTML = `
         <div class="game-image">
-          <img src="${game.imageUrl || 'https://via.placeholder.com/300x400'}" alt="${escapeHtml(game.title)}" onerror="this.src='https://via.placeholder.com/300x400'">
+          <img src="${game.imageUrl || 'https://via.placeholder.com/300x400'}" 
+               alt="${escapeHtml(game.title)}" 
+               loading="lazy"
+               onerror="this.src='https://via.placeholder.com/300x400/2a3142/ffffff?text=' + encodeURIComponent('${escapeHtml(game.title)}')"
+               onload="this.style.opacity='1'; this.classList.add('loaded')"
+               style="opacity: 0; transition: opacity 0.3s ease;">
         </div>
         <div class="game-info">
           <h3>${escapeHtml(game.title)}</h3>
