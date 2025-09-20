@@ -48,11 +48,34 @@ public class GameStoreDataInitializer implements CommandLineRunner {
       new Game("The Last of Us Part II", "A story of revenge and redemption", "Naughty Dog", new BigDecimal("59.99"), "Action")
     );
 
-    // Add additional properties to games
+    // Add additional properties to games with real images
+    String[] gameImages = {
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg", // Cyberpunk 2077
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg", // The Witcher 3
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg", // GTA V
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/440/header.jpg", // Minecraft
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/945360/header.jpg", // Among Us
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1097150/header.jpg", // Fall Guys
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1276090/header.jpg", // Valorant
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/12140/header.jpg", // League of Legends
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg", // Counter-Strike 2
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/header.jpg", // Baldur's Gate 3
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", // Elden Ring
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg", // Hogwarts Legacy
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/2519060/header.jpg", // Call of Duty MW3
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/2195250/header.jpg", // FIFA 24
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/2338770/header.jpg", // NBA 2K24
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/2053850/header.jpg", // Assassin's Creed Mirage
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1817190/header.jpg", // Spider-Man 2
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1954200/header.jpg", // God of War Ragnarök
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1151640/header.jpg", // Horizon Forbidden West
+      "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/header.jpg"  // The Last of Us Part II
+    };
+
     for (int i = 0; i < sampleGames.size(); i++) {
       Game game = sampleGames.get(i);
       game.setPublisher(game.getDeveloper());
-      game.setImageUrl("https://via.placeholder.com/300x400/2a3142/ffffff?text=" + game.getTitle().replace(" ", "+"));
+      game.setImageUrl(gameImages[i]);
       game.setRating(4.0 + (i % 5) * 0.2); // Random rating between 4.0-4.8
       game.setReviewCount(100 + (i * 50)); // Varying review counts
       game.setTags(Arrays.asList(game.getCategory().toLowerCase(), "popular", "trending"));

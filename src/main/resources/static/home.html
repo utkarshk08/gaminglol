@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GameStore - Your Digital Gaming Hub</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .home-container {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .home-header h1 {
+      font-size: 3rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    
+    .home-header p {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 3rem;
+    }
+    
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .auth-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+      min-width: 150px;
+    }
+    
+    .auth-btn.primary {
+      background: #007bff;
+      color: white;
+    }
+    
+    .auth-btn.primary:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+    }
+    
+    .auth-btn.secondary {
+      background: #28a745;
+      color: white;
+    }
+    
+    .auth-btn.secondary:hover {
+      background: #218838;
+      transform: translateY(-2px);
+    }
+    
+    .features {
+      margin-top: 4rem;
+      text-align: left;
+    }
+    
+    .features h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-card h3 {
+      color: #007bff;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="home-container">
+    <div class="home-header">
+      <h1>🎮 GameStore</h1>
+      <p>Your Digital Gaming Hub - Buy games, manage subscriptions, and track your gaming journey!</p>
+    </div>
+    
+    <div class="auth-buttons">
+      <a href="/login.html" class="auth-btn primary">Sign In</a>
+      <a href="/signup.html" class="auth-btn secondary">Create Account</a>
+    </div>
+    
+    <div class="features">
+      <h2>Why Choose GameStore?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>🎯 Game Catalog</h3>
+          <p>Browse through a curated collection of popular games across various categories including RPG, Action, FPS, and more.</p>
+        </div>
+        
+        <div class="feature-card">
+          <h3>💳 Wallet System</h3>
+          <p>Manage your gaming budget with our built-in wallet system. Add funds and make secure purchases.</p>
+        </div>
+        
+        <div class="feature-card">
+          <h3>💎 Subscription Plans</h3>
+          <p>Choose from Basic, Premium, or Ultimate subscription plans with exclusive benefits and early access.</p>
+        </div>
+        
+        <div class="feature-card">
+          <h3>📊 Analytics</h3>
+          <p>Track your gaming spending, view purchase history, and discover your gaming preferences.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if user is already logged in
+    window.addEventListener('load', () => {
+      const currentUser = localStorage.getItem('currentUser');
+      if (currentUser) {
+        // User is already logged in, redirect to main app
+        window.location.href = '/';
+      }
+    });
+  </script>
+</body>
+</html>

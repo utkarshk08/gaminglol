@@ -42,9 +42,9 @@
   let userSubscription = null;
   let userPurchases = [];
 
-  const playerNameInput = $('#playerName');
-  const createProfileBtn = $('#createProfileBtn');
-  const authStatus = $('#authStatus');
+  const welcomeMessage = $('#welcomeMessage');
+  const currentUsername = $('#currentUsername');
+  const logoutBtn = $('#logoutBtn');
   const profilePanel = $('#profilePanel');
   const subscriptionPanel = $('#subscriptionPanel');
   const myGamesPanel = $('#myGamesPanel');
@@ -54,13 +54,26 @@
   const searchBtn = $('#searchBtn');
 
   async function init() {
+    // Check authentication first
+    if (!checkAuthentication()) {
+      return; // Will redirect to login
+    }
+    
+    // Show user panels since user is authenticated
+    profilePanel.style.display = 'block';
+    subscriptionPanel.style.display = 'block';
+    myGamesPanel.style.display = 'block';
+    
     await loadGames();
     await loadAnalytics();
+    await loadUserProfile();
+    await loadUserSubscription();
+    await loadUserPurchases();
     setupEventListeners();
   }
 
   function setupEventListeners() {
-    createProfileBtn.addEventListener('click', createUserProfile);
+    logoutBtn.addEventListener('click', logout);
     $('#refreshProfileBtn').addEventListener('click', loadUserProfile);
     $('#addWalletBtn').addEventListener('click', addToWallet);
     $('#refreshSubscriptionBtn').addEventListener('click', loadUserSubscription);
@@ -77,32 +90,40 @@
     });
   }
 
-  async function createUserProfile() {
-    const username = playerNameInput.value.trim();
-    if (!username) {
-      authStatus.textContent = 'Please enter a username';
-      return;
+  function checkAuthentication() {
+    const userData = localStorage.getItem('currentUser');
+    if (!userData) {
+      // User not authenticated, redirect to home page
+      window.location.href = '/home.html';
+      return false;
     }
-
+    
     try {
-      const profile = await api.createUser({
-        username,
-        email: `${username}@example.com`,
-        fullName: username
-      });
-      
-      currentUser = username;
-      authStatus.textContent = `Profile created for ${username}`;
-      profilePanel.style.display = 'block';
-      subscriptionPanel.style.display = 'block';
-      myGamesPanel.style.display = 'block';
-      
-      await loadUserProfile();
-      await loadUserSubscription();
-      await loadUserPurchases();
+      const user = JSON.parse(userData);
+      currentUser = user.username;
+      currentUsername.textContent = user.username;
+      return true;
     } catch (error) {
-      authStatus.textContent = 'Failed to create profile';
-      console.error(error);
+      console.error('Error parsing user data:', error);
+      localStorage.removeItem('currentUser');
+      window.location.href = '/home.html';
+      return false;
+    }
+  }
+
+  async function logout() {
+    try {
+      // Call logout endpoint if it exists
+      await fetch('/api/auth/signout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Clear local storage and redirect
+      localStorage.removeItem('currentUser');
+      window.location.href = '/home.html';
     }
   }
 
@@ -254,7 +275,8 @@
     
     try {
       const response = await api.getUserSubscription(currentUser);
-      if (response.id) {
+      console.log('Subscription response:', response); // Debug log
+      if (response && response.id) {
         userSubscription = response;
         updateSubscriptionDisplay();
       } else {
@@ -262,6 +284,7 @@
         updateSubscriptionDisplay();
       }
     } catch (error) {
+      console.error('Error loading subscription:', error);
       userSubscription = null;
       updateSubscriptionDisplay();
     }
@@ -271,7 +294,10 @@
     const subscriptionInfo = $('#subscriptionInfo');
     const cancelBtn = $('#cancelSubscriptionBtn');
     
-    if (userSubscription && userSubscription.isActive) {
+    // Check for both possible field names (isActive or active)
+    const isActive = userSubscription && (userSubscription.isActive || userSubscription.active);
+    
+    if (userSubscription && isActive) {
       subscriptionInfo.innerHTML = `
         <div class="active-subscription">
           <h3>${userSubscription.subscriptionType} Plan</h3>
@@ -302,6 +328,8 @@
         paymentMethod: 'WALLET'
       });
 
+      console.log('Subscription creation result:', result); // Debug log
+
       if (result.success) {
         showNotification(`Successfully subscribed to ${planType} plan!`, 'success');
         await loadUserProfile();
@@ -310,6 +338,7 @@
         showNotification(result.message, 'error');
       }
     } catch (error) {
+      console.error('Subscription creation error:', error);
       showNotification('Failed to create subscription', 'error');
     }
   }
